@@ -1,0 +1,57 @@
+[19:56] <Matt> albeit at about 5 frames per second
+[19:56] <Matt> :/
+[19:57] <@ibutsu> zao: I would lean towards no
+[19:57] <@ibutsu> but I have never used express much
+[19:58] <Matt> when i put it in release mode, not debug mode, its back to being insanely fast
+[19:58] <@zao> Hmm, I wonder if I should steal back the second SSD from the FBSD server and use it for source.
+[19:58] <@zao> Matt: Debug mode is by definition unfast.
+[19:58] <@zao> Matt: Does it chug if you Ctrl-F5 launch it too in Debug?
+[19:59] * Aku (Aku@AN-F13255E0.cust.bredbandsbolaget.se) Quit (Ping timeout)
+[19:59] <@zao> http://zao.se/~zao/games/MoT%202014-09-25%2000-59-33-165.png
+[19:59] <@zao> I sense a slight discrepancy in lighting here...
+[19:59] <@ibutsu> I sense it too
+[20:00] <@zao> Matt: In a debug build, you get a significant amount of consistency checking on allocations, containers, function entry/exit, etc.
+[20:01] <@zao> Matt: And if you run under a debugger, Windows automatically substitutes in a "debug heap", which is more shit than the good no-fragmentation one.
+[20:01] * Baum3 (Baum5@AN-A36B649A.vpn.uni-bielefeld.de) Quit (Ping timeout)
+[20:01] <@zao> To combat the former, consider disabling _SECURE_SCL and stuff.
+[20:01] * Aku (Aku@AN-F13255E0.cust.bredbandsbolaget.se) has joined #gamedev
+[20:01] <@zao> To combat the latter, set the environment variable _NO_DEBUG_HEAP=1.
+[20:01] <@zao> You can spot the latter by observing a difference in perf by launching with/without debugger (F5 vs. Ctrl-F5) in VS.
+[20:02] <@MikeP> the debug heap is hilariously slow
+[20:02] * Rawr|Mac (Albert@1DC8FC.1815E1.DB2253.C93404.IP) Quit (Ping timeout)
+[20:03] <@zao> "why is my load phase taking >1min on a release build?"
+[20:03] <@zao> protobuf was alloc happy :)
+[20:03] <@zao> Or if it was assimp, can't remember.
+[20:04] <@ibutsu> assimp always makes me giggle
+[20:05] <@MikeP> it's kind of bizarre how much slower C++ debug mode is than most other dev environments
+[20:05] <@MikeP> like, you write your code in C++ for speed, but god forbid you need to debug something
+[20:06] <%Washu> i know
+[20:06] <%Washu> C# debugging is like lightning fast
+[20:06] <%Washu> as long as its not WCF.
+[20:06] <%Washu> WCF, for some reason, takes for fucking ever to break into
+[20:07] * Lorentz (lorentz@736738.E48A76.F80257.51080E.IP) Quit (Registered)
+[20:07] * Lorentz (lorentz@lorentz.Users.AfterNET.Org) has joined #gamedev
+[20:07] <@zao> I tend to settled for RelWithDebInfo.
+[20:07] * Rawr|Mac (Albert@1DC8FC.1815E1.DB2253.C93404.IP) has joined #gamedev
+[20:07] <@zao> Ooh, lighting helped significantly with LoD boundaries.
+[20:08] <@zao> http://zao.se/~zao/games/MoT%202014-09-25%2001-08-16-286.png
+[20:08] <@zao> On the other hand, can't see shit now.
+[20:08] <Sirisian|Work> I can see how making them all black would make them look the same.
+[20:08] <@ibutsu> indeed
+[20:09] <%Washu> looks like zao is going the Doom 3 route.
+[20:09] <@zao> Just wait until I "light" the terrain too.
+[20:09] <%Washu> Carmack: "I can still see things... make it darker."
+[20:10] <%Washu> "Ok, i've made it even darker!"
+[20:10] <@ibutsu> don't blame Carmack, it's not his fault he got his eyes shined
+[20:10] <%Washu> Carmack: "Nope, not dark enough!" Dev: "But... its just a black polygon." Carmack: "That's the problem, render everything, just make it black."
+[20:11] <%Washu> umm
+[20:11] <%Washu> what's up with the sparkles
+[20:11] <%Washu> in the cente,r zao.
+[20:11] <@zao> Washu: Rendered particles for each joint in a bloke.
+[20:12] <@zao> Was going to make musket smoke and thus needed to attach emitters to bones.
+[20:12] <@zao> https://www.youtube.com/watch?v=pUTrhbeMt1Y
+[20:13] * meoblast001 (meoblast@AN-51A29870.zoominternet.net) has joined #gamedev
+[20:14] <%Washu> ok
+[20:14] <%Washu> so my other question is
+[20:14] <%Washu> why is the blue team
+[20:14] <%Washu> fighting the blue team
